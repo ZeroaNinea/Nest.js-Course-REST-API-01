@@ -57,7 +57,7 @@ export class PostsController {
 
   @Put(':id')
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe, PostExistsPipe) id: number,
     // @Body()
     // updatePostData: Partial<Omit<postInterface.Post, 'id' | 'createdAt'>>,
     @Body() updatePostData: UpdatePostDto,
@@ -67,7 +67,7 @@ export class PostsController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id', ParseIntPipe) id: number): void {
+  remove(@Param('id', ParseIntPipe, PostExistsPipe) id: number): void {
     this.postsService.remove(id);
   }
 }
