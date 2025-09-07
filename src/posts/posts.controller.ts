@@ -16,6 +16,7 @@ import {
 import { PostsService } from './posts.service';
 import * as postInterface from './interfaces/post.interface';
 import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -54,8 +55,9 @@ export class PostsController {
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body()
-    updatePostData: Partial<Omit<postInterface.Post, 'id' | 'createdAt'>>,
+    // @Body()
+    // updatePostData: Partial<Omit<postInterface.Post, 'id' | 'createdAt'>>,
+    @Body() updatePostData: UpdatePostDto,
   ) {
     return this.postsService.update(id, updatePostData);
   }
