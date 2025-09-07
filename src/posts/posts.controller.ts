@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Inject,
   Param,
   Query,
@@ -39,5 +40,14 @@ export class PostsController {
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createPostData: Omit<postInterface.Post, 'id' | 'createdAt'>) {
     return this.postsService.create(createPostData);
+  }
+
+  @Put(':id')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body()
+    updatePostData: Partial<Omit<postInterface.Post, 'id' | 'createdAt'>>,
+  ) {
+    return this.postsService.update(id, updatePostData);
   }
 }
