@@ -6,7 +6,7 @@ This part covers **Modules**, **Controllers**, **Services**, and using `@nestjs/
 ## What I Learned
 
 - Working on creating **Rest APIs**.
-- **DTO** and **Validation**.
+- **DTO**, **Pipes**, and **Validation**.
 
 ## How to Run
 
