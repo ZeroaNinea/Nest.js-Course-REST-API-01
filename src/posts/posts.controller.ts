@@ -17,6 +17,7 @@ import { PostsService } from './posts.service';
 import * as postInterface from './interfaces/post.interface';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { PostExistsPipe } from './post-exists/post-exists.pipe';
 
 @Controller('posts')
 export class PostsController {
@@ -36,7 +37,9 @@ export class PostsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): postInterface.Post {
+  findOne(
+    @Param('id', ParseIntPipe, PostExistsPipe) id: number,
+  ): postInterface.Post {
     return this.postsService.findOne(id);
   }
 
