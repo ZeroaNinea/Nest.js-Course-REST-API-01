@@ -35,7 +35,7 @@ export class PostsController {
     return this.postsService.findOne(id);
   }
 
-  @Post()
+  @Post('create')
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createPostData: Omit<postInterface.Post, 'id' | 'createdAt'>) {
     return this.postsService.create(createPostData);
