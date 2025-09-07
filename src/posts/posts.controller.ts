@@ -3,6 +3,7 @@ import {
   Get,
   Post,
   Put,
+  Delete,
   Inject,
   Param,
   Query,
@@ -49,5 +50,11 @@ export class PostsController {
     updatePostData: Partial<Omit<postInterface.Post, 'id' | 'createdAt'>>,
   ) {
     return this.postsService.update(id, updatePostData);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  remove(@Param('id', ParseIntPipe) id: number): void {
+    this.postsService.remove(id);
   }
 }
