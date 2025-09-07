@@ -11,6 +11,7 @@ import {
   HttpCode,
   HttpStatus,
   Body,
+  // UsePipes,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import * as postInterface from './interfaces/post.interface';
@@ -40,6 +41,7 @@ export class PostsController {
 
   @Post('create')
   @HttpCode(HttpStatus.CREATED)
+  // @UsePipes() // The validators only applied to this controller.
   create(
     // @Body() createPostData: Omit<postInterface.Post, 'id' | 'createdAt'>
     @Body() createPostData: CreatePostDto,
