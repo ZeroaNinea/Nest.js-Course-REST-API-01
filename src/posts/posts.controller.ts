@@ -41,7 +41,9 @@ export class PostsController {
 
   @Post('create')
   @HttpCode(HttpStatus.CREATED)
-  // @UsePipes() // The validators only applied to this controller.
+  // @UsePipes(
+  // new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
+  // ) // The validators only applied to this controller.
   create(
     // @Body() createPostData: Omit<postInterface.Post, 'id' | 'createdAt'>
     @Body() createPostData: CreatePostDto,
