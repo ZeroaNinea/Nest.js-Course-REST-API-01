@@ -1,10 +1,10 @@
 export default () => ({
-  port: parseInt(<string>process.env.PORT, 10) || 3000,
   database: {
-    host: process.env.DATABASE_HOST,
-    port: parseInt(<string>process.env.DATABASE_PORT, 10) || 5432,
-    username: process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
+    host: process.env.DB_HOST,
+    port: parseInt(<string>process.env.DB_PORT, 10) || 5432,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    dialect: process.env.DB_DIALECT,
   },
 });
