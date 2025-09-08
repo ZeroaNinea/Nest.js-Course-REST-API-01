@@ -7,6 +7,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PostsModule } from './posts/posts.module';
 
+import { Post } from './posts/entities/post.entity';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -31,6 +33,7 @@ import { PostsModule } from './posts/posts.module';
         database: configService.get<string>('DB_NAME'),
         autoLoadEntities: true, // Picks up entities automatically.
         synchronize: true, // For dev only (don't use in prod!).
+        entities: [Post],
       }),
     }),
     PostsModule,
