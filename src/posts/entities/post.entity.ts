@@ -11,10 +11,10 @@ export class Post {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ length: 50 })
   title: string;
 
-  @Column()
+  @Column({ type: 'text' })
   content: string;
 
   @Column()
