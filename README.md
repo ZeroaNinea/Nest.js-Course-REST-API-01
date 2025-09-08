@@ -23,7 +23,17 @@ docker run --name postgres \
 ## Environment Variables
 
 ```env
-# DB
+# Application
+PORT=3000
+
+# Database
+DB_DIALECT=postgres
+DB_USERNAME=postgres
+DB_PASSWORD=password
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=postgres
+
 DATABASE_URL=postgres://postgres:password@localhost:5432/postgres
 
 ```
