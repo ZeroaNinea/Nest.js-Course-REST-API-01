@@ -18,6 +18,6 @@ async function bootstrap() {
 }
 bootstrap()
   .then(() =>
-    console.log(` 🚀 Server started on port ${process.env.PORT ?? 3000}!`),
+    console.log(` 🚀 Server started on port ${process.env.PORT ?? 5000}!`),
   )
   .catch(console.error);
