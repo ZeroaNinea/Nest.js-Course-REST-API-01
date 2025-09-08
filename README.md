@@ -8,6 +8,20 @@ This part covers **Modules**, **Controllers**, **Services**, and using `@nestjs/
 - Working on creating **Rest APIs**.
 - **DTO**, **Pipes**, and **Validation**.
 
+## Deploy PostgresSQL
+
+```bash
+docker run --name postgres -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres
+```
+
+## Environment Variables
+
+```env
+# DB
+DATABASE_URL=postgres://postgres:password@localhost:5432/postgres
+
+```
+
 ## How to Run
 
 ```bash
