@@ -52,7 +52,8 @@ export class PostsController {
   //   return this.postsService.findOne(id);
   // }
 
-  @Post('create')
+  // @Post('create')
+  @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createPostData: CreatePostDto): Promise<PostEntity> {
     return this.postsService.create(createPostData);
