@@ -68,7 +68,7 @@ export class PostsController {
   // }
 
   @Put(':id')
-  update(
+  async update(
     @Param('id', ParseIntPipe, PostExistsPipe) id: number,
     // @Body()
     // updatePostData: Partial<Omit<postInterface.Post, 'id' | 'createdAt'>>,
@@ -79,7 +79,9 @@ export class PostsController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id', ParseIntPipe, PostExistsPipe) id: number): void {
-    this.postsService.remove(id);
+  async remove(
+    @Param('id', ParseIntPipe, PostExistsPipe) id: number,
+  ): Promise<void> {
+    await this.postsService.remove(id);
   }
 }
