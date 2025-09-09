@@ -11,12 +11,12 @@ import { PostsService } from '../posts.service';
 export class PostExistsPipe implements PipeTransform {
   constructor(@Inject() private readonly postsService?: PostsService) {}
 
-  transform(
+  async transform(
     value: number,
     // metadata: ArgumentMetadata
   ) {
     try {
-      this.postsService?.findOne(value);
+      await this.postsService?.findOne(value);
     } catch {
       throw new NotFoundException(`Post with ID ${value} not found.`);
     }
