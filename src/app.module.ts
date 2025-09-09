@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { PostsModule } from './posts/posts.module';
 
 import { Post } from './posts/entities/post.entity';
+import { User } from './auth/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -34,7 +35,7 @@ import { AuthModule } from './auth/auth.module';
         database: configService.get<string>('DB_NAME'),
         autoLoadEntities: true, // Picks up entities automatically.
         synchronize: true, // For dev only (don't use in prod!).
-        entities: [Post],
+        entities: [Post, User],
       }),
     }),
     PostsModule,
