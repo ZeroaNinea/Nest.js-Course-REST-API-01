@@ -114,9 +114,9 @@ export class PostsService {
     await this.postsRepository.remove(post);
   }
 
-  private getNextId(): number {
-    return this.posts.length > 0
-      ? Math.max(...this.posts.map((post) => post.id)) + 1
-      : 1;
-  }
+  // private getNextId(): number {
+  //   return this.posts.length > 0
+  //     ? Math.max(...this.posts.map((post) => post.id)) + 1
+  //     : 1;
+  // }
 }
