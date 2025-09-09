@@ -6,7 +6,7 @@ import {
   Delete,
   Inject,
   Param,
-  Query,
+  // Query,
   ParseIntPipe,
   HttpCode,
   HttpStatus,
@@ -14,34 +14,43 @@ import {
   // UsePipes,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
-import * as postInterface from './interfaces/post.interface';
+// import * as postInterface from './interfaces/post.interface';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostExistsPipe } from './post-exists/post-exists.pipe';
+import { Post as PostEntity } from './entities/post.entity';
 
 @Controller('posts')
 export class PostsController {
   constructor(@Inject() private readonly postsService: PostsService) {}
 
   @Get()
-  findAll(@Query('search') search?: string): postInterface.Post[] {
-    const extractAllPosts = this.postsService.findAll();
-
-    if (search) {
-      return extractAllPosts.filter((singlePost) =>
-        singlePost.title.toLowerCase().includes(search.toLowerCase()),
-      );
-    }
-
-    return extractAllPosts;
+  async findAll(): Promise<PostEntity[]> {
+    return this.postsService.findAll();
   }
+  // findAll(@Query('search') search?: string): postInterface.Post[] {
+  //   const extractAllPosts = this.postsService.findAll();
+
+  //   if (search) {
+  //     return extractAllPosts.filter((singlePost) =>
+  //       singlePost.title.toLowerCase().includes(search.toLowerCase()),
+  //     );
+  //   }
+
+  //   return extractAllPosts;
+  // }
 
   @Get(':id')
-  findOne(
+  async findOne(
     @Param('id', ParseIntPipe, PostExistsPipe) id: number,
-  ): postInterface.Post {
+  ): Promise<PostEntity> {
     return this.postsService.findOne(id);
   }
+  // findOne(
+  //   @Param('id', ParseIntPipe, PostExistsPipe) id: number,
+  // ): postInterface.Post {
+  //   return this.postsService.findOne(id);
+  // }
 
   @Post('create')
   @HttpCode(HttpStatus.CREATED)
