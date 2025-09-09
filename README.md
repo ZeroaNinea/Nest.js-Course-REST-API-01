@@ -20,6 +20,18 @@ docker run --name postgres \
 
 ```
 
+Run the container again to restart the database.
+
+```bash
+docker start -a postgres
+```
+
+Stop the container.
+
+```bash
+docker stop -a postgres
+```
+
 ## Environment Variables
 
 ```env
