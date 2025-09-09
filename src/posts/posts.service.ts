@@ -20,8 +20,8 @@ export class PostsService {
     private postsRepository: Repository<Post>,
   ) {}
 
-  findAll(): Post[] {
-    return this.posts;
+  async findAll(): Promise<Post[]> {
+    return await this.postsRepository.find();
   }
 
   findOne(id: number): Post {
