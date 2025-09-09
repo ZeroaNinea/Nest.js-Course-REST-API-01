@@ -66,3 +66,4 @@ npm run start:dev
 
 - **[Nest JS Full Course 2025 | Node JS Full Course | Part 4](https://www.youtube.com/watch?v=XVZ10uFY9DU&t=3109s)** created by Sangam Mukherjee
 - **[NestJS documentation](https://docs.nestjs.com/)**
+- **[TypeORM documentation](https://typeorm.io/docs/getting-started/)]**
