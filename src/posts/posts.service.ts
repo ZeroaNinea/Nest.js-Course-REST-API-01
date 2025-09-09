@@ -2,7 +2,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Post } from './entities/post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
 import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()
 export class PostsService {
@@ -57,25 +59,42 @@ export class PostsService {
     return this.postsRepository.save(post);
   }
 
-  update(
+  async update(
     id: number,
-    updatePostData: Partial<Omit<Post, 'id' | 'createdAt'>>,
-  ): Post {
-    const currentPostIndexToEdit = this.posts.findIndex(
-      (post) => post.id === id,
-    );
+    // updatePostData: Partial<Omit<Post, 'id' | 'createdAt'>>,
+    updatePostData: UpdatePostDto,
+  ): Promise<Post> {
+    // const currentPostIndexToEdit = this.posts.findIndex(
+    //   (post) => post.id === id,
+    // );
 
-    if (currentPostIndexToEdit === -1) {
-      throw new NotFoundException(`Post with ID ${id} not found.`);
+    // if (currentPostIndexToEdit === -1) {
+    //   throw new NotFoundException(`Post with ID ${id} not found.`);
+    // }
+
+    // this.posts[currentPostIndexToEdit] = {
+    //   ...this.posts[currentPostIndexToEdit],
+    //   ...updatePostData,
+    //   updatedAt: new Date(),
+    // };
+
+    // return this.posts[currentPostIndexToEdit];
+
+    const post = await this.findOne(id);
+
+    if (updatePostData.title) {
+      post.title = updatePostData.title;
     }
 
-    this.posts[currentPostIndexToEdit] = {
-      ...this.posts[currentPostIndexToEdit],
-      ...updatePostData,
-      updatedAt: new Date(),
-    };
+    if (updatePostData.content) {
+      post.content = updatePostData.content;
+    }
 
-    return this.posts[currentPostIndexToEdit];
+    if (updatePostData.authorName) {
+      post.authorName = updatePostData.authorName;
+    }
+
+    return this.postsRepository.save(post);
   }
 
   remove(id: number): { message: string } {
