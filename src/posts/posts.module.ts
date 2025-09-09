@@ -9,6 +9,7 @@ import { Post } from './entities/post.entity';
 @Module({
   // This will make the post repository available to the PostsController.
   imports: [TypeOrmModule.forFeature([Post])],
+  exports: [TypeOrmModule],
   controllers: [PostsController],
   providers: [PostsService],
 })
