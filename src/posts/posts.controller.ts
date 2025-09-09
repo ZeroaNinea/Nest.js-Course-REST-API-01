@@ -54,15 +54,18 @@ export class PostsController {
 
   @Post('create')
   @HttpCode(HttpStatus.CREATED)
+  async create(@Body() createPostData: CreatePostDto): Promise<PostEntity> {
+    return this.postsService.create(createPostData);
+  }
   // @UsePipes(
   // new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
   // ) // The validators only applied to this controller.
-  create(
-    // @Body() createPostData: Omit<postInterface.Post, 'id' | 'createdAt'>
-    @Body() createPostData: CreatePostDto,
-  ) {
-    return this.postsService.create(createPostData);
-  }
+  // create(
+  //   // @Body() createPostData: Omit<postInterface.Post, 'id' | 'createdAt'>
+  //   @Body() createPostData: CreatePostDto,
+  // ) {
+  //   return this.postsService.create(createPostData);
+  // }
 
   @Put(':id')
   update(
