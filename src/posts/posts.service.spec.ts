@@ -10,7 +10,15 @@ describe('PostsService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [TypeOrmModule.forRoot(), TypeOrmModule.forFeature([Post])],
+      imports: [
+        TypeOrmModule.forRoot({
+          type: 'sqlite',
+          database: ':memory:',
+          entities: [Post],
+          synchronize: true,
+        }),
+        TypeOrmModule.forFeature([Post]),
+      ],
       providers: [PostsService],
     }).compile();
 
