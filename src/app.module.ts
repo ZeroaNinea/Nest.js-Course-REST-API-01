@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { PostsModule } from './posts/posts.module';
 
 import { Post } from './posts/entities/post.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { Post } from './posts/entities/post.entity';
       }),
     }),
     PostsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
