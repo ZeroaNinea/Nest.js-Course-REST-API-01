@@ -10,12 +10,14 @@ import * as bcrypt from 'bcrypt';
 import { User, UserRole } from './entities/user.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>,
+    private readonly userRepository: Repository<User>,
+    private readonly jwtService: JwtService,
   ) {}
 
   async register(registerDto: RegisterDto) {
@@ -73,6 +75,18 @@ export class AuthService {
         'Invalid credentials or account does not exist.',
       );
     }
+
+    const tokens = this.generateTokens(user);
+
+    return {
+      ...tokens,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+      },
+    };
   }
 
   private async hashPassword(password: string) {
@@ -81,5 +95,26 @@ export class AuthService {
 
   private async verifyPassword(password: string, hashedPassword: string) {
     return bcrypt.compare(password, hashedPassword);
+  }
+
+  private generateTokens(user: User) {
+    return {
+      accessToken: this.generateAccessToken(user),
+      refreshToken: this.generateRefreshToken(user),
+    };
+  }
+
+  private generateAccessToken(user: User): string {
+    const payload = {
+      email: user.email,
+      name: user.name,
+      role: user.role,
+    };
+
+    return '';
+  }
+
+  private generateRefreshToken(user: User): string {
+    return '';
   }
 }
