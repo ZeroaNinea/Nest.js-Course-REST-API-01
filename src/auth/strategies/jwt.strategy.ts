@@ -14,8 +14,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
+  async validate(payload: { sub: number; role: string }) {
     try {
+      const user = await this.authService.getUserById(payload.sub);
+
+      return {
+        ...user,
+        role: payload.role,
+      };
     } catch {
       throw new UnauthorizedException('Invalid token.');
     }
