@@ -4,7 +4,9 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
-import { User } from './entities/user.entity';
+import { User, UserRole } from './entities/user.entity';
+import { RolesGuard } from './guards/roles.guard';
+import { Roles } from './decorators/roles.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -29,5 +31,12 @@ export class AuthController {
   @Get('profile')
   getProfile(@CurrentUser() user: User) {
     return user;
+  }
+
+  @Post('create-admin')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  createAdmin(@Body() registerDto: RegisterDto) {
+    return this.authService.createAdmin(registerDto);
   }
 }
