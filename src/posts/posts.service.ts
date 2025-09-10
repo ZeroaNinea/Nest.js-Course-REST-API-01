@@ -8,15 +8,15 @@ import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()
 export class PostsService {
-  private posts: Post[] = [
-    {
-      id: 1,
-      title: 'First Post',
-      content: 'First post content.',
-      authorName: 'Sangam',
-      createdAt: new Date(),
-    },
-  ];
+  // private posts: Post[] = [
+  //   {
+  //     id: 1,
+  //     title: 'First Post',
+  //     content: 'First post content.',
+  //     authorName: 'Sangam',
+  //     createdAt: new Date(),
+  //   },
+  // ];
 
   constructor(
     @InjectRepository(Post)
