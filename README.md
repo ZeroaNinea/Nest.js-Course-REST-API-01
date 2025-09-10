@@ -8,7 +8,7 @@ This part covers **Modules**, **Controllers**, **Services**, and using `@nestjs/
 - Working on creating **Rest APIs**.
 - **DTO**, **Pipes**, and **Validation**.
 - **TypeORM** and database integration with **PostgresSQL**.
-- **JWT**, **`@nestjs/passport`**, and **`@nestjs/jwt`**.
+- **JWT**, **`@nestjs/passport`**, **`@nestjs/jwt`**, and **RBAC (role-based access control)**.
 
 ## Deploy PostgresSQL
 
