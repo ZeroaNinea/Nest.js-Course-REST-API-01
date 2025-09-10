@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { PostsService } from './posts.service';
 import { Post } from './entities/post.entity';
+import { User } from '../auth/entities/user.entity';
 
 describe('PostsService', () => {
   let service: PostsService;
@@ -14,10 +15,10 @@ describe('PostsService', () => {
         TypeOrmModule.forRoot({
           type: 'sqlite',
           database: ':memory:',
-          entities: [Post],
+          // entities: [Post, User],
           synchronize: true,
         }),
-        TypeOrmModule.forFeature([Post]),
+        TypeOrmModule.forFeature([Post, User]),
       ],
       providers: [PostsService],
     }).compile();

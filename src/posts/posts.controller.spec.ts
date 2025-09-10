@@ -3,6 +3,7 @@ import { PostsController } from './posts.controller';
 import { PostsService } from './posts.service';
 import { Post } from './entities/post.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from '../auth/entities/user.entity';
 
 describe('PostsController', () => {
   let controller: PostsController;
@@ -13,10 +14,10 @@ describe('PostsController', () => {
         TypeOrmModule.forRoot({
           type: 'sqlite',
           database: ':memory:',
-          entities: [Post],
+          // entities: [Post, User],
           synchronize: true,
         }),
-        TypeOrmModule.forFeature([Post]),
+        TypeOrmModule.forFeature([Post, User]),
       ],
       controllers: [PostsController],
       providers: [PostsService],
