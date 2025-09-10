@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { User } from './entities/user.entity';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -21,7 +22,7 @@ describe('AuthController', () => {
         TypeOrmModule.forFeature([User]),
       ],
       controllers: [AuthController],
-      providers: [AuthService, JwtService],
+      providers: [AuthService, JwtService, JwtAuthGuard],
     }).compile();
 
     controller = module.get<AuthController>(AuthController);
