@@ -76,6 +76,7 @@ export class PostsController {
   //   return this.postsService.create(createPostData);
   // }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   async update(
     @Param('id', ParseIntPipe, PostExistsPipe) id: number,
