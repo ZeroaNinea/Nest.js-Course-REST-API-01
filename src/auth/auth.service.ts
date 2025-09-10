@@ -111,10 +111,20 @@ export class AuthService {
       role: user.role,
     };
 
-    return '';
+    return this.jwtService.sign(payload, {
+      secret: 'jwt_secret',
+      expiresIn: '15m',
+    });
   }
 
   private generateRefreshToken(user: User): string {
-    return '';
+    const payload = {
+      sub: user.id,
+    };
+
+    return this.jwtService.sign(payload, {
+      secret: 'jwt_refresh_secret',
+      expiresIn: '7d',
+    });
   }
 }
