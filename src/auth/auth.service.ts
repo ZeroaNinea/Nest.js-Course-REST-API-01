@@ -1,10 +1,15 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 import { User, UserRole } from './entities/user.entity';
 import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -55,7 +60,26 @@ export class AuthService {
     return this.userRepository.save(user);
   }
 
+  async login(loginDto: LoginDto) {
+    const user = await this.userRepository.findOne({
+      where: { email: loginDto.email },
+    });
+
+    if (
+      !user ||
+      !(await this.verifyPassword(loginDto.password, user.password))
+    ) {
+      throw new UnauthorizedException(
+        'Invalid credentials or account does not exist.',
+      );
+    }
+  }
+
   private async hashPassword(password: string) {
     return bcrypt.hash(password, 10);
+  }
+
+  private async verifyPassword(password: string, hashedPassword: string) {
+    return bcrypt.compare(password, hashedPassword);
   }
 }
