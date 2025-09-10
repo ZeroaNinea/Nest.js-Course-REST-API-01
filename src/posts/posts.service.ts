@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { User } from '../auth/entities/user.entity';
 
 @Injectable()
 export class PostsService {
@@ -45,6 +46,7 @@ export class PostsService {
   async create(
     // createPostData: Omit<Post, 'id' | 'createdAt'>
     createPostData: CreatePostDto,
+    author: User,
   ): Promise<Post> {
     // const newPost: Post = {
     //   id: this.getNextId(),
@@ -58,7 +60,8 @@ export class PostsService {
     const post = this.postsRepository.create({
       title: createPostData.title,
       content: createPostData.content,
-      authorName: createPostData.authorName,
+      // authorName: createPostData.authorName,
+      author,
     });
 
     return this.postsRepository.save(post);
@@ -95,9 +98,9 @@ export class PostsService {
       post.content = updatePostData.content;
     }
 
-    if (updatePostData.authorName) {
-      post.authorName = updatePostData.authorName;
-    }
+    // if (updatePostData.authorName) {
+    //   post.authorName = updatePostData.authorName;
+    // }
 
     return this.postsRepository.save(post);
   }
