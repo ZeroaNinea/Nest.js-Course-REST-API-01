@@ -89,6 +89,28 @@ export class AuthService {
     };
   }
 
+  async refreshToken(refreshToken: string) {
+    try {
+      const payload: { sub: number } = this.jwtService.verify(refreshToken, {
+        secret: 'jwt_refresh_secret',
+      });
+
+      const user = await this.userRepository.findOneBy({ id: payload.sub });
+
+      if (!user) {
+        throw new UnauthorizedException('Invalid refresh token.');
+      }
+
+      const accessToken = this.generateAccessToken(user);
+
+      return {
+        accessToken,
+      };
+    } catch {
+      throw new UnauthorizedException('Invalid refresh token.');
+    }
+  }
+
   private async hashPassword(password: string) {
     return bcrypt.hash(password, 10);
   }
