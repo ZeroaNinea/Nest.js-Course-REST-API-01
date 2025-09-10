@@ -95,6 +95,10 @@ export class PostsService {
 
     const post = await this.findOne(id);
 
+    if (!post) {
+      throw new NotFoundException(`Post with ID ${id} not found.`);
+    }
+
     if (post.author.id !== user.id && user.role !== UserRole.ADMIN) {
       throw new ForbiddenException('You can only update your own posts.');
     }
