@@ -18,7 +18,11 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
-  ) {}
+  ) {
+    // bcrypt.hash('admin_password', 10).then((hash) => {
+    //   console.log(hash);
+    // });
+  }
 
   async register(registerDto: RegisterDto) {
     const existingUser = await this.userRepository.findOne({
@@ -160,3 +164,13 @@ export class AuthService {
     });
   }
 }
+
+/*
+INSERT INTO "user" (email, name, password, role)
+VALUES (
+  "admin@gmail.com",
+  "Admin",
+  "$2b$10$VvNPw8Zu2ni2CNJ6aN7mOeilP5Z0AgoPpHJd6o2ilS5POxmU7eAR.",
+  "admin"
+);
+*/
