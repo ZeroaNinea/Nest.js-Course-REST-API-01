@@ -11,6 +11,7 @@ import {
   HttpCode,
   HttpStatus,
   Body,
+  UseGuards,
   // UsePipes,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
@@ -19,6 +20,9 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostExistsPipe } from './post-exists/post-exists.pipe';
 import { Post as PostEntity } from './entities/post.entity';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { User } from '../auth/entities/user.entity';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
 
 @Controller('posts')
 export class PostsController {
@@ -53,10 +57,14 @@ export class PostsController {
   // }
 
   // @Post('create')
+  @UseGuards(JwtAuthGuard)
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() createPostData: CreatePostDto): Promise<PostEntity> {
-    return this.postsService.create(createPostData);
+  async create(
+    @Body() createPostData: CreatePostDto,
+    @CurrentUser() user: User,
+  ): Promise<PostEntity> {
+    return this.postsService.create(createPostData, user);
   }
   // @UsePipes(
   // new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
