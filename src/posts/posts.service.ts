@@ -1,11 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Post } from './entities/post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { User } from '../auth/entities/user.entity';
+import { User, UserRole } from '../auth/entities/user.entity';
 
 @Injectable()
 export class PostsService {
@@ -71,6 +75,7 @@ export class PostsService {
     id: number,
     // updatePostData: Partial<Omit<Post, 'id' | 'createdAt'>>,
     updatePostData: UpdatePostDto,
+    user: User,
   ): Promise<Post> {
     // const currentPostIndexToEdit = this.posts.findIndex(
     //   (post) => post.id === id,
@@ -89,6 +94,10 @@ export class PostsService {
     // return this.posts[currentPostIndexToEdit];
 
     const post = await this.findOne(id);
+
+    if (post.author.id !== user.id && user.role !== UserRole.ADMIN) {
+      throw new ForbiddenException('You can only update your own posts.');
+    }
 
     if (updatePostData.title) {
       post.title = updatePostData.title;

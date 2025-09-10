@@ -83,8 +83,9 @@ export class PostsController {
     // @Body()
     // updatePostData: Partial<Omit<postInterface.Post, 'id' | 'createdAt'>>,
     @Body() updatePostData: UpdatePostDto,
+    @CurrentUser() user: User,
   ) {
-    return this.postsService.update(id, updatePostData);
+    return this.postsService.update(id, updatePostData, user);
   }
 
   @Delete(':id')
