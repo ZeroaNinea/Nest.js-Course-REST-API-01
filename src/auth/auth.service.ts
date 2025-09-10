@@ -34,6 +34,27 @@ export class AuthService {
     return this.userRepository.save(user);
   }
 
+  async createAdmin(registerDto: RegisterDto) {
+    const existingUser = await this.userRepository.findOne({
+      where: { email: registerDto.email },
+    });
+
+    if (existingUser) {
+      throw new BadRequestException('Email already exists.');
+    }
+
+    const hashedPassword = await this.hashPassword(registerDto.password);
+
+    const user = this.userRepository.create({
+      email: registerDto.email,
+      name: registerDto.name,
+      password: hashedPassword,
+      role: UserRole.ADMIN,
+    });
+
+    return this.userRepository.save(user);
+  }
+
   private async hashPassword(password: string) {
     return bcrypt.hash(password, 10);
   }
