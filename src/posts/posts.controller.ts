@@ -21,8 +21,9 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { PostExistsPipe } from './post-exists/post-exists.pipe';
 import { Post as PostEntity } from './entities/post.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { User } from '../auth/entities/user.entity';
+import { User, UserRole } from '../auth/entities/user.entity';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { Roles } from '../auth/decorators/roles.decorator';
 
 @Controller('posts')
 export class PostsController {
@@ -88,6 +89,7 @@ export class PostsController {
     return this.postsService.update(id, updatePostData, user);
   }
 
+  @Roles(UserRole.ADMIN)
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(
