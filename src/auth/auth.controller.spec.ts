@@ -1,8 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-// import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtService } from '@nestjs/jwt';
 
 import { AuthController } from './auth.controller';
-// import { User } from './entities/user.entity';
+import { AuthService } from './auth.service';
+import { User } from './entities/user.entity';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -10,15 +12,16 @@ describe('AuthController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        // TypeOrmModule.forRoot({
-        //   type: 'sqlite',
-        //   database: ':memory:',
-        //   entities: [User],
-        //   synchronize: true,
-        // }),
-        // TypeOrmModule.forFeature([User]),
+        TypeOrmModule.forRoot({
+          type: 'sqlite',
+          database: ':memory:',
+          // entities: [User],
+          synchronize: true,
+        }),
+        TypeOrmModule.forFeature([User]),
       ],
       controllers: [AuthController],
+      providers: [AuthService, JwtService],
     }).compile();
 
     controller = module.get<AuthController>(AuthController);
