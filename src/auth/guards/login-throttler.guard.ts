@@ -4,8 +4,14 @@ import { Request } from 'express';
 
 @Injectable()
 export class LoginThrottlerGuard extends ThrottlerGuard {
-  protected async getTracker(req: Record<string, any>): Promise<string> {
+  protected async getTracker(
+    req: Record<string, { email: string }>,
+  ): Promise<string> {
     const email = req.body?.email || 'anonymous';
-    return `login-${email}`;
+    return Promise.resolve(`login-${email}`);
+  }
+
+  protected getLimit(): Promise<number> {
+    return Promise.resolve(5);
   }
 }
