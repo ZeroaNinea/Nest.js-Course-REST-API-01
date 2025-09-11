@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { DynamicModule, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
@@ -49,7 +49,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     PostsModule,
     AuthModule,
-  ],
+  ] as (DynamicModule | Promise<DynamicModule> | typeof PostsModule)[],
   controllers: [AppController],
   providers: [AppService],
 })
