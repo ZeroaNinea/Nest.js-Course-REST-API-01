@@ -6,3 +6,8 @@ export interface PaginationMetaFormat {
   hasPreviousPage: boolean;
   hasNextPage: boolean;
 }
+
+export interface PaginatedResponce<T> {
+  items: T[];
+  meta: PaginationMetaFormat;
+}
