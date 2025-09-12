@@ -8,7 +8,6 @@ import { AuthService } from './auth.service';
 import { User } from './entities/user.entity';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { RolesGuard } from './guards/roles.guard';
-
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
