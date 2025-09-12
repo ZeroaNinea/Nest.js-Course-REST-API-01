@@ -143,6 +143,8 @@ export class PostsService {
       author,
     });
 
+    await this.invalidateAllExistingListCaches();
+
     return this.postsRepository.save(post);
   }
 
@@ -190,7 +192,15 @@ export class PostsService {
     //   post.authorName = updatePostData.authorName;
     // }
 
-    return this.postsRepository.save(post);
+    const updatedPost = await this.postsRepository.save(post);
+
+    await this.postsRepository.delete(`post_${id}`);
+
+    await this.invalidateAllExistingListCaches();
+
+    // return this.postsRepository.save(post);
+
+    return updatedPost;
   }
 
   async remove(id: number): Promise<void> {
@@ -208,6 +218,10 @@ export class PostsService {
 
     const post = await this.findOne(id);
     await this.postsRepository.remove(post);
+
+    await this.cacheManager.del(`post_${id}`);
+
+    await this.invalidateAllExistingListCaches();
   }
 
   // private getNextId(): number {
@@ -215,4 +229,16 @@ export class PostsService {
   //     ? Math.max(...this.posts.map((post) => post.id)) + 1
   //     : 1;
   // }
+
+  private async invalidateAllExistingListCaches(): Promise<void> {
+    console.log(
+      `Invalidating ${this.postListCacheKeys.size} list cache entities`,
+    );
+
+    for (const key of this.postListCacheKeys) {
+      await this.cacheManager.del(key);
+    }
+
+    this.postListCacheKeys.clear();
+  }
 }
