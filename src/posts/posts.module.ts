@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CacheModule } from '@nestjs/cache-manager';
 
 import { PostsController } from './posts.controller';
 import { PostsService } from './posts.service';
@@ -9,7 +10,11 @@ import { AuthModule } from '../auth/auth.module';
 
 @Module({
   // This will make the post repository available to the PostsController.
-  imports: [TypeOrmModule.forFeature([Post]), AuthModule],
+  imports: [
+    TypeOrmModule.forFeature([Post]),
+    AuthModule,
+    CacheModule.register(),
+  ],
   exports: [TypeOrmModule],
   controllers: [PostsController],
   providers: [PostsService],
