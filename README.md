@@ -53,6 +53,11 @@ DB_NAME=postgres
 
 DATABASE_URL=postgres://postgres:password@localhost:5432/postgres
 
+# Add your data here.
+# Cloudinary
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
 ```
 
 ## How to Run
