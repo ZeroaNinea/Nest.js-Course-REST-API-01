@@ -12,6 +12,7 @@ import { PostsModule } from './posts/posts.module';
 import { Post } from './posts/entities/post.entity';
 import { User } from './auth/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { FileUploadModule } from './file-upload/file-upload.module';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     PostsModule,
     AuthModule,
+    FileUploadModule,
   ] as (DynamicModule | Promise<DynamicModule> | typeof PostsModule)[],
   controllers: [AppController],
   providers: [AppService],
