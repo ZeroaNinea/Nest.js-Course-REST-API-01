@@ -4,6 +4,7 @@ import { PostsService } from './posts.service';
 import { Post } from './entities/post.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../auth/entities/user.entity';
+import { CacheModule } from '@nestjs/cache-manager';
 
 describe('PostsController', () => {
   let controller: PostsController;
@@ -18,6 +19,7 @@ describe('PostsController', () => {
           synchronize: true,
         }),
         TypeOrmModule.forFeature([Post, User]),
+        CacheModule.register(),
       ],
       controllers: [PostsController],
       providers: [PostsService],

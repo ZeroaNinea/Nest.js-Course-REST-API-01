@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CacheModule } from '@nestjs/cache-manager';
 
 import { PostsService } from './posts.service';
 import { Post } from './entities/post.entity';
@@ -19,6 +20,7 @@ describe('PostsService', () => {
           synchronize: true,
         }),
         TypeOrmModule.forFeature([Post, User]),
+        CacheModule.register(),
       ],
       providers: [PostsService],
     }).compile();
