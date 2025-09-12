@@ -25,6 +25,8 @@ export class PostsService {
   //   },
   // ];
 
+  private postListCacheKeys: Set<string> = new Set();
+
   constructor(
     @InjectRepository(Post)
     private postsRepository: Repository<Post>,
