@@ -11,6 +11,7 @@ This part covers **Modules**, **Controllers**, **Services**, and using `@nestjs/
 - **JWT**, **`@nestjs/passport`**, **`@nestjs/jwt`**, and **RBAC (role-based access control)**.
 - **`@nestjs/throttler`**.
 - **`@nestjs/cache-manager`** and **`cache-manager`**.
+- **`@nestjs/config`**, **`@nestjs/platform-express`**, **`cloudinary`**, **`multer`**, and **`streamifier`**.
 
 ## Deploy PostgresSQL
 
