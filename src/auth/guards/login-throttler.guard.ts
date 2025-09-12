@@ -19,11 +19,9 @@ export class LoginThrottlerGuard extends ThrottlerGuard {
     return Promise.resolve(60000);
   }
 
-  protected async throwThrottlingException(): Promise<void> {
-    await Promise.resolve(() => {
-      throw new ThrottlerException(
-        `Too many attempts. Please try again after 1 minute.`,
-      );
-    });
+  protected throwThrottlingException(): Promise<void> {
+    throw new ThrottlerException(
+      `Too many attempts. Please try again after 1 minute.`,
+    );
   }
 }
