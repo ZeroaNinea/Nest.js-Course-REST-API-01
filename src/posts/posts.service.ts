@@ -98,6 +98,16 @@ export class PostsService {
   }
 
   async findOne(id: number): Promise<Post> {
+    const cacheKey = `post_${id}`;
+    const cachedPost = await this.cacheManager.get<Post>(cacheKey);
+
+    if (cachedPost) {
+      console.log(`Cache Hit ------> Returning post from Cache ${cacheKey}`);
+      return cachedPost;
+    }
+
+    console.log(`Cache Miss ------> Returning post from database`);
+
     const post = await this.postsRepository.findOne({
       where: { id },
       relations: ['author'],
@@ -106,6 +116,8 @@ export class PostsService {
     if (!post) {
       throw new NotFoundException(`Post with ID ${id} not found.`);
     }
+
+    await this.cacheManager.set(cacheKey, post, 30000);
 
     return post;
   }
