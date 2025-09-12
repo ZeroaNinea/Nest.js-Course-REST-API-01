@@ -12,6 +12,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { User, UserRole } from '../auth/entities/user.entity';
+import { FindPostsQueryDto } from './dto/find-posts-query.dto';
 
 @Injectable()
 export class PostsService {
@@ -32,6 +33,11 @@ export class PostsService {
     private postsRepository: Repository<Post>,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
+
+  private generatePostsListCacheKey(query: FindPostsQueryDto): string {
+    const { page = 1, limit = 10, title } = query;
+    return `posts_list_page${page}_limit${limit}_title${title || 'all'}`;
+  }
 
   async findAll(): Promise<Post[]> {
     return await this.postsRepository.find({
