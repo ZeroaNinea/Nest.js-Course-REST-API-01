@@ -14,7 +14,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { User, UserRole } from '../auth/entities/user.entity';
 import { FindPostsQueryDto } from './dto/find-posts-query.dto';
-import { PaginatedResponce } from 'src/common/interfaces/paginated-responce.interface';
+import { PaginatedResponce } from '../common/interfaces/paginated-responce.interface';
 
 @Injectable()
 export class PostsService {

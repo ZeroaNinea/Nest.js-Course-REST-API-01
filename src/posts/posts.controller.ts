@@ -12,6 +12,7 @@ import {
   HttpStatus,
   Body,
   UseGuards,
+  Query,
   // UsePipes,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
@@ -25,14 +26,18 @@ import { User, UserRole } from '../auth/entities/user.entity';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
+import { PaginatedResponce } from '../common/interfaces/paginated-responce.interface';
+import { FindPostsQueryDto } from './dto/find-posts-query.dto';
 
 @Controller('posts')
 export class PostsController {
   constructor(@Inject() private readonly postsService: PostsService) {}
 
   @Get()
-  async findAll(): Promise<PostEntity[]> {
-    return this.postsService.findAll();
+  async findAll(
+    @Query() query: FindPostsQueryDto,
+  ): Promise<PaginatedResponce<PostEntity>> {
+    return this.postsService.findAll(query);
   }
   // findAll(@Query('search') search?: string): postInterface.Post[] {
   //   const extractAllPosts = this.postsService.findAll();
