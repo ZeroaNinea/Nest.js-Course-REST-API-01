@@ -10,6 +10,7 @@ This part covers **Modules**, **Controllers**, **Services**, and using `@nestjs/
 - **TypeORM** and database integration with **PostgresSQL**.
 - **JWT**, **`@nestjs/passport`**, **`@nestjs/jwt`**, and **RBAC (role-based access control)**.
 - **`@nestjs/throttler`**.
+- **`@nestjs/cache-manager`** and **`cache-manager`**.
 
 ## Deploy PostgresSQL
 
