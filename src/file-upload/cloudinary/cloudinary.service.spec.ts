@@ -12,11 +12,21 @@ describe('CloudinaryService', () => {
           provide: 'CLOUDINARY',
           useValue: {
             uploader: {
-              upload_stream: jest.fn().mockImplementation((_opts, cb) => {
-                // simulate async callback with no error
-                cb(null, { secure_url: 'http://fake-url.com/image.png' });
-                return {} as any;
-              }),
+              upload_stream: jest
+                .fn()
+                .mockImplementation(
+                  (
+                    _opts,
+                    cb: (
+                      nullValue: null,
+                      { secure_url }: { secure_url: string },
+                    ) => void,
+                  ) => {
+                    // simulate async callback with no error
+                    cb(null, { secure_url: 'http://fake-url.com/image.png' });
+                    return {};
+                  },
+                ),
             },
           },
         },
