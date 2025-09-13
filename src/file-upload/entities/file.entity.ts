@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  CreateDateColumn,
+} from 'typeorm';
+import { User } from '../../auth/entities/user.entity';
 
 @Entity()
 export class FileEntity {
@@ -22,4 +29,10 @@ export class FileEntity {
 
   @Column({ nullable: true })
   description: string;
+
+  @ManyToOne(() => User, { eager: true })
+  uploader: User;
+
+  @CreateDateColumn()
+  createdAt: Date;
 }
