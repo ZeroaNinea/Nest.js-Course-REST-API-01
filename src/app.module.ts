@@ -14,6 +14,7 @@ import { User } from './auth/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { CloudinaryModule } from './file-upload/cloudinary/cloudinary.module';
+import { File } from './file-upload/entities/file.entity';
 
 @Module({
   imports: [
@@ -52,7 +53,7 @@ import { CloudinaryModule } from './file-upload/cloudinary/cloudinary.module';
         database: configService.get<string>('DB_NAME'),
         autoLoadEntities: true, // Picks up entities automatically.
         synchronize: true, // For dev only (don't use in prod!).
-        entities: [Post, User],
+        entities: [Post, User, File],
       }),
     }),
     PostsModule,

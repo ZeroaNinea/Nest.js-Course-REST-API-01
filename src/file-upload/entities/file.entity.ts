@@ -8,7 +8,7 @@ import {
 import { User } from '../../auth/entities/user.entity';
 
 @Entity()
-export class FileEntity {
+export class File {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
