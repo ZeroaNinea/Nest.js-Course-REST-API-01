@@ -44,6 +44,8 @@ export class AuthService {
       role: UserRole.USER,
     });
 
+    this.eventsService.emitUserRegistered(user);
+
     return this.userRepository.save(user);
   }
 
