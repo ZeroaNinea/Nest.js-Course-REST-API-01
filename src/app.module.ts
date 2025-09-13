@@ -13,6 +13,7 @@ import { Post } from './posts/entities/post.entity';
 import { User } from './auth/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
   imports: [
