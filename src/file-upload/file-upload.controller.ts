@@ -2,6 +2,9 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
+  Get,
+  Param,
   Post,
   UploadedFile,
   UseGuards,
@@ -14,7 +17,9 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UploadFileDto } from './dto/upload-file.dto';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 
-import { User } from '../auth/entities/user.entity';
+import { User, UserRole } from '../auth/entities/user.entity';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { RolesGuard } from '../auth/guards/roles.guard';
 
 @Controller('file-upload')
 export class FileUploadController {
@@ -37,5 +42,18 @@ export class FileUploadController {
       uploadFileDto.description,
       user,
     );
+  }
+
+  @Get()
+  async findAll() {
+    return this.fileUploadService.findAll();
+  }
+
+  @Delete(':id')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  async remove(@Param('id') id: string) {
+    await this.fileUploadService.remove(id);
+    return { message: `File with ID ${id} deleted.` };
   }
 }
