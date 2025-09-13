@@ -15,6 +15,7 @@ import { AuthModule } from './auth/auth.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { CloudinaryModule } from './file-upload/cloudinary/cloudinary.module';
 import { File } from './file-upload/entities/file.entity';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
