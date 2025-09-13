@@ -5,6 +5,8 @@ import {
   UploadApiErrorResponse,
   v2 as Cloudinary,
 } from 'cloudinary';
+// import { createReadStream } from 'streamifier';
+import streamifier from 'streamifier';
 
 type CloudinaryProvider = typeof Cloudinary;
 
@@ -15,10 +17,9 @@ export class CloudinaryService {
     private readonly cloudinary: CloudinaryProvider,
   ) {}
 
-  uploadFile(/* file: Express.Multer.File */): Promise<UploadApiResponse> {
+  uploadFile(file: Express.Multer.File): Promise<UploadApiResponse> {
     return new Promise<UploadApiResponse>((resolve, reject) => {
-      // const uploadStream =
-      this.cloudinary.uploader.upload_stream(
+      const uploadStream = this.cloudinary.uploader.upload_stream(
         {
           folder: 'youtube-nestjs-course',
           resource_type: 'auto',
@@ -31,6 +32,8 @@ export class CloudinaryService {
           }
         },
       );
+
+      streamifier.createReadStream(file.buffer).pipe(uploadStream);
     });
   }
 }
