@@ -33,9 +33,6 @@ export class CloudinaryService {
         },
       );
 
-      console.log(file);
-      console.log(uploadStream);
-
       streamifier.createReadStream(file.buffer).pipe(uploadStream);
     });
   }
