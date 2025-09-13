@@ -33,4 +33,11 @@ export class FileUploadService {
 
     return this.fileRepository.save(newlyCreatedFile);
   }
+
+  async findAll(): Promise<File[]> {
+    return this.fileRepository.find({
+      relations: ['uploader'],
+      order: { createdAt: 'DESC' },
+    });
+  }
 }
