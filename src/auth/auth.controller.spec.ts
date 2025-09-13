@@ -2,9 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { EventsService } from '../events/events.service';
 import { User } from './entities/user.entity';
 
 describe('AuthController', () => {
@@ -13,6 +15,12 @@ describe('AuthController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
+        EventEmitterModule.forRoot({
+          global: true,
+          wildcard: false,
+          maxListeners: 20,
+          verboseMemoryLeak: true,
+        }),
         ThrottlerModule.forRoot({
           throttlers: [
             {
@@ -30,7 +38,7 @@ describe('AuthController', () => {
         TypeOrmModule.forFeature([User]),
       ],
       controllers: [AuthController],
-      providers: [AuthService, JwtService],
+      providers: [AuthService, JwtService, EventsService],
     }).compile();
 
     controller = module.get<AuthController>(AuthController);

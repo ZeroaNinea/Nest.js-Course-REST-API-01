@@ -1,9 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 import { AuthService } from './auth.service';
 import { User } from './entities/user.entity';
+import { EventsService } from '../events/events.service';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -11,6 +13,12 @@ describe('AuthService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
+        EventEmitterModule.forRoot({
+          global: true,
+          wildcard: false,
+          maxListeners: 20,
+          verboseMemoryLeak: true,
+        }),
         TypeOrmModule.forRoot({
           type: 'sqlite',
           database: ':memory:',
@@ -19,7 +27,7 @@ describe('AuthService', () => {
         }),
         TypeOrmModule.forFeature([User]),
       ],
-      providers: [AuthService, JwtService],
+      providers: [AuthService, JwtService, EventsService],
     }).compile();
 
     service = module.get<AuthService>(AuthService);
