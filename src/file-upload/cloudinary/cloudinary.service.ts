@@ -21,7 +21,7 @@ export class CloudinaryService {
     return new Promise<UploadApiResponse>((resolve, reject) => {
       const uploadStream = this.cloudinary.uploader.upload_stream(
         {
-          folder: 'youtube-nestjs-course',
+          folder: 'uploads',
           resource_type: 'auto',
         },
         (error: UploadApiErrorResponse, result: UploadApiResponse) => {
@@ -32,6 +32,9 @@ export class CloudinaryService {
           }
         },
       );
+
+      console.log(file);
+      console.log(uploadStream);
 
       streamifier.createReadStream(file.buffer).pipe(uploadStream);
     });
