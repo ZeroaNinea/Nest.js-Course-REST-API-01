@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -39,5 +39,18 @@ export class FileUploadService {
       relations: ['uploader'],
       order: { createdAt: 'DESC' },
     });
+  }
+
+  async remove(id: string): Promise<void> {
+    const fileToBeDeleted = await this.fileRepository.findOne({
+      where: { id },
+    });
+
+    if (!fileToBeDeleted) {
+      throw new NotFoundException(`File with ID ${id} not found.`);
+    }
+
+    await this.cloudinaryService.deleteFile(fileToBeDeleted.publicId);
+    await this.fileRepository.remove(fileToBeDeleted);
   }
 }
