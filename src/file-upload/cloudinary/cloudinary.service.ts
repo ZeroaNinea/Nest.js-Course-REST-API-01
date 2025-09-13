@@ -36,4 +36,8 @@ export class CloudinaryService {
       streamifier.createReadStream(file.buffer).pipe(uploadStream);
     });
   }
+
+  async deleteFile(publicId: string): Promise<any> {
+    return this.cloudinary.uploader.destroy(publicId);
+  }
 }
