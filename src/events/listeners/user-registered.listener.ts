@@ -1,23 +1,17 @@
-import { Injectable } from '@nestjs/common';
-import { EventEmitter2 } from '@nestjs/event-emitter';
-
-import { User } from '../../auth/entities/user.entity';
-import { UserRegisteredEvent } from '../interfaces/user-registered-event.interface';
+import { Injectable, Logger } from '@nestjs/common';
+import { OnEvent } from '@nestjs/event-emitter';
+import type { UserRegisteredEvent } from '../interfaces/user-registered-event.interface';
 
 @Injectable()
-export class UserEventsService {
-  constructor(private readonly eventEmitter: EventEmitter2) {}
+export class UserRegisteredListener {
+  private readonly logger = new Logger(UserRegisteredListener.name);
 
-  emitUserRegistered(user: User): void {
-    const UserRegisteredEventData: UserRegisteredEvent = {
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-      },
-      timeStamp: new Date(),
-    };
+  @OnEvent('user.registered')
+  handleUserRegisteredEvent(event: UserRegisteredEvent): void {
+    const { user, timeStamp } = event;
 
-    this.eventEmitter.emit('user.registered', UserRegisteredEventData);
+    this.logger.log(
+      `Welcome, ${user.email}! Your Account created at ${timeStamp.toISOString()}`,
+    );
   }
 }
