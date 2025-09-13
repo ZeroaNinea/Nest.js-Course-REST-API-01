@@ -22,7 +22,6 @@ describe('CloudinaryService', () => {
                       { secure_url }: { secure_url: string },
                     ) => void,
                   ) => {
-                    // simulate async callback with no error
                     cb(null, { secure_url: 'http://fake-url.com/image.png' });
                     return {};
                   },
