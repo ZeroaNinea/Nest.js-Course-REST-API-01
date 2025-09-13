@@ -13,4 +13,13 @@ export class FileEntity {
 
   @Column()
   size: number;
+
+  @Column()
+  url: string;
+
+  @Column()
+  publicId: string;
+
+  @Column({ nullable: true })
+  description: string;
 }
